@@ -1,4 +1,5 @@
 import * as toasty from '../../shared/toastify/toastify';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { useSelector, useDispatch } from 'react-redux';
 import ClockIcon from '../images/icons/ClockIcon';
 import FemaleIcon from '../images/icons/FemaleIcon';
@@ -13,7 +14,7 @@ import useToggleModalWindow from '../../hooks/useToggleModalWindow';
 import useToggleModalApproveAction from '../../hooks/useToggleModalModalApproveAction';
 import Modal from '../Modal/Modal';
 import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
-import { getFavorite, getUserId} from '../../redux/auth/auth-selectors';
+import { getFavorite, getUserId } from '../../redux/auth/auth-selectors';
 import {
   fetchAddToFavorite,
   fetchRemoveFromFavorite,
@@ -54,7 +55,7 @@ const NoticeCategoryItem = ({
     price: price,
   };
   const [currentNotice, setCurrentNotice] = useState({});
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { isModalOpen, openModal, closeModal } = useToggleModalWindow();
   const { isModalOpenApprove, openModalApprove, closeModalApprove } =
     useToggleModalApproveAction();
@@ -78,13 +79,17 @@ const NoticeCategoryItem = ({
   }
   const age = getAge(dateOfBirth);
 
+  const btnAddToFavorite = () => {
+    Notify.failure('You need authorization');
+  };
+
   const handleFavoriteToggle = async () => {
-    if (!isLoggedIn) return toasty.toastInfo('You must be logged in');
+    // if (!isLoggedIn) return toasty.toastInfo('You must be logged in');
     if (favorites.includes(_id)) {
       try {
         dispatch(fetchRemoveFromFavorite(_id));
         toasty.toastSuccess('remove from favorite');
-        
+
         return;
       } catch (e) {
         toasty.toastError(e.message);
@@ -93,7 +98,7 @@ const NoticeCategoryItem = ({
       try {
         dispatch(fetchAddToFavorite(_id));
         toasty.toastSuccess('add to favorite');
-       
+
         return;
       } catch (e) {
         toasty.toastError(e.message);
@@ -114,21 +119,20 @@ const NoticeCategoryItem = ({
     return false;
   };
   const handleDelete = _id => {
- 
     dispatch(fetchDeleteNotice(_id));
     toasty.toastSuccess('Deleted successful');
   };
 
   const getCategoryNotice = category => {
-    if (category === "for-free") {
-      category = "in good hands";
+    if (category === 'for-free') {
+      category = 'in good hands';
     }
-    if (category === "lost-found") {
-      category = "lost/found";
+    if (category === 'lost-found') {
+      category = 'lost/found';
     }
     return category;
-  }
-  
+  };
+
   return (
     <li key={_id} className={css.listItems}>
       <div className={css.imageThumb}>
@@ -138,42 +142,47 @@ const NoticeCategoryItem = ({
           alt={title}
           width="280"
         />
-         <div className={css.topBlock}>
-          {category === 'for-free' ? (
-            <p className={css.categoryInfo}>in good hands</p>
-          ) : (
-            <p className={css.categoryInfo}>{getCategoryNotice(category)}</p>
-          )}
-          <div>
+        <div className={css.topBlock}>
+          <p className={css.categoryInfo}>{getCategoryNotice(category)}</p>
+          {!isLoggedIn && (
             <Button
-              onClick={handleFavoriteToggle}
+              onClick={() => btnAddToFavorite(_id)}
               className={css.topBtn}
-              SVGComponent={() => (
-                <HeartIcon
-                  className={
-                    checkFavorite(_id)
-                      ? `${css.icons} ${css.favoriteIcon}`
-                      : css.icons
-                  }
+              SVGComponent={() => <HeartIcon className={css.icons} />}
+            />
+          )}
+          {isLoggedIn && (
+            <div>
+              <Button
+                onClick={handleFavoriteToggle}
+                className={css.topBtn}
+                SVGComponent={() => (
+                  <HeartIcon
+                    className={
+                      checkFavorite(_id)
+                        ? `${css.icons} ${css.favoriteIcon}`
+                        : css.icons
+                    }
+                  />
+                )}
+              />
+              {checkOwner(ownerNotice) && (
+                <Button
+                  onClick={openModalApprove}
+                  className={css.topBtn}
+                  SVGComponent={() => <TrashIcon color="#54ADFF" />}
                 />
               )}
-            />
-            {checkOwner(ownerNotice) && (
-              <Button
-                onClick={openModalApprove}
-                className={css.topBtn}
-                SVGComponent={() => <TrashIcon color="#54ADFF" />}
-              />
-            )}
-            {isModalOpenApprove && (
-              <ModalApproveAction
-                closeModal={closeModalApprove}
-                handleDelete={handleDelete}
-                _id={_id}
-                title={title}
-              />
-            )}
-          </div>
+              {isModalOpenApprove && (
+                <ModalApproveAction
+                  closeModal={closeModalApprove}
+                  handleDelete={handleDelete}
+                  _id={_id}
+                  title={title}
+                />
+              )}
+            </div>
+          )}
         </div>
         <div className={css.infoCardBlock}>
           <p className={css.noticeInfo}>
@@ -199,18 +208,18 @@ const NoticeCategoryItem = ({
         <h3 className={css.noticeTitle}>{title}</h3>
         <Button
           className={css.learnBtn}
-          onClick={()=> {
-            console.log(data)
-            setCurrentNotice(data)
-            console.log(currentNotice)
-            openModal()
+          onClick={() => {
+            console.log(data);
+            setCurrentNotice(data);
+            console.log(currentNotice);
+            openModal();
           }}
-          >
+        >
           Learn more
         </Button>
         {isModalOpen && (
           <Modal closeModal={closeModal}>
-            <ModalNotice {...currentNotice}/>
+            <ModalNotice {...currentNotice} />
           </Modal>
         )}
       </div>

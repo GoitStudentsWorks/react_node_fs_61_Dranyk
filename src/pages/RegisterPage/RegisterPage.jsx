@@ -48,13 +48,14 @@ const RegisterPage = () => {
     };
     sendData();
 
-    if (loading && error) {
-      return <Loader />;
-    }
+    // if (loading && error) {
+    //   return <Loader />;
+    // }
   };
 
   return (
     <Container>
+      {loading && !error && <Loader />}
       {modalActive && <UserPage />}
       {/* <div className={styles.modal}> */}
       <Modal active={modalActive} setActive={setModalActive}>

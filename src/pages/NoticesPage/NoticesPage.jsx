@@ -7,7 +7,7 @@ import {
   ApiMynoticesCategory,
 } from './../../shared/servises/pet-api';
 import NoticesSearch from '../../components/NoticesSearch/NoticesSearch';
-import Menu from '../../components/NoticesCategoriesNav/NoticesCategoriesNav.jsx';
+import NoticesCategoriesNav from './../../components/NoticesCategoriesNav/NoticesCategoriesNav';
 import NoticesCategoriesList from '../../components/NoticesCategoriesList/NoticesCategoriesList.jsx';
 import Loader from 'components/Loader/Loader';
 import styles from './noticesPage.module.css';
@@ -87,13 +87,18 @@ const NoticePage = () => {
     }
   }, [category, search, token]);
 
+  const changNavAndSearch = () => {
+    setSearch("");
+  };
+
+
   return (
     <div className={styles.container}>
       <NoticesSearch onSubmit={searchPetByTitle} />
-      <Menu />
+      <NoticesCategoriesNav changNavAndSearch={changNavAndSearch} />
       {loading && <Loader />}
       {error && <p className={styles.error}>...error</p>}
-      {items && <NoticesCategoriesList items={items} />}
+      {items.length > 0 ? <NoticesCategoriesList items={items} /> : <p>There are no pets here...add please</p>}
     </div>
   );
 };

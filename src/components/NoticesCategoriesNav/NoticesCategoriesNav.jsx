@@ -16,26 +16,26 @@ const StyledLink = styled(NavLink)`
 }
 `;
 
-const NoticesCategoriesNav = () => {
+const NoticesCategoriesNav = ({changNavAndSearch}) => {
 
   const { isLoggedIn } = useAuth();
   return (
     <>
           <div className={styles.inner}>
             <nav className={styles.navigation}>
-          <StyledLink to="/notices/sell" className={styles.navigationButton} >
+          <StyledLink onClick={changNavAndSearch} to="/notices/sell" className={styles.navigationButton} >
             sell
           </StyledLink>
-          <StyledLink to="/notices/lost-found" className={styles.navigationButton} >
+          <StyledLink onClick={changNavAndSearch} to="/notices/lost-found" className={styles.navigationButton} >
             lost/found
           </StyledLink>
-             <StyledLink to="/notices/for-free" className={styles.navigationButton } >
+             <StyledLink onClick={changNavAndSearch} to="/notices/for-free" className={styles.navigationButton } >
             in good hands
             </StyledLink>
-          {isLoggedIn && <StyledLink to="/notices/favorite" className={styles.navigationButton} >
+          {isLoggedIn && <StyledLink  onClick={changNavAndSearch} to="/notices/favorite" className={styles.navigationButton} >
             favorite ads
           </StyledLink>}
-          {isLoggedIn && <StyledLink to="/notices/own" className={styles.navigationButton} >
+          {isLoggedIn && <StyledLink onClick={changNavAndSearch} to="/notices/own" className={styles.navigationButton} >
             my ads
           </StyledLink>}
         </nav>

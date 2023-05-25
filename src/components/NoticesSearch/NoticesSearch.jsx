@@ -7,14 +7,30 @@ import { useState } from 'react';
 const NoticesSearch = ({ onSubmit }) => {
   const [state, setState] = useState({ ...initialState });
 
-  const handlChange = ({ target }) => {
+
+  // const [state, setState] = useState('');
+
+  // const handleChange = ({ target }) => {
+  //   const value = target.value;
+  //   setState(value);
+  //   if (value.trim() === '') {
+  //     onSubmit(value);
+  //   }
+  // };
+
+  // const handleSubmit = e => {
+  //   e.preventDefault();
+  //   onSubmit(state);
+  // };
+
+  const handleChange = ({ target }) => {
     const { name, value } = target;
     setState(prevState => {
       return { ...prevState, [name]: value }
     });
   };
 
-  const handlSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (state.search.trim() === '') {
       return alert('Search field is empty');
@@ -27,11 +43,11 @@ const NoticesSearch = ({ onSubmit }) => {
     <>
       <div className={styles.header}>
         <h1 className={styles.title}>Find your favorite pet</h1>
-        <form onSubmit={handlSubmit} action="" className={styles.form}>
+        <form onSubmit={handleSubmit} action="" className={styles.form}>
           <input
-            onChange={handlChange}
+            onChange={handleChange}
             name="search"
-            value={state.search}
+            value={state.value}
             type="search"
             className={styles.input}
             placeholder="Search"

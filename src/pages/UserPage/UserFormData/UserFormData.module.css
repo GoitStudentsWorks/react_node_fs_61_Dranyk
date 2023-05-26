@@ -97,7 +97,7 @@
 .photo {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     margin: 0 auto;
     width: 182px;
     height: 182px;

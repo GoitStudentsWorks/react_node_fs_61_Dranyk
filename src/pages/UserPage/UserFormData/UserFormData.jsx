@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import instance from 'redux/auth/auth';
 import Logout from '../Logout/Logout';
+import Loader from '../../../components/Loader/Loader';
 
 import css from './UserFormData.module.css';
 
@@ -20,6 +21,9 @@ const UserFormData = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmittingData, setIsSubmittingData] = useState(false);
   const [activeField, setActiveField] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log('isLoading', isLoading);
 
   const toggleEditable = field => {
     if (activeField === field) {
@@ -31,10 +35,13 @@ const UserFormData = () => {
 
   const fetchData = async () => {
     try {
+      setIsLoading(true);
       const { data } = await instance.get('/api/user/pets/getAllUserPets');
       setUserData(data.userInfo);
     } catch (error) {
       console.error('Error fetching pets:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -297,7 +304,7 @@ const UserFormData = () => {
     )
   );
 
-  return <>{DataUser}</>;
+  return isLoading ? <Loader /> : <>{DataUser}</>;
 };
 
 export default UserFormData;

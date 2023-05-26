@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams, useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 
 import {
   ApiCategoryBySearchAndCategory,
@@ -22,24 +22,9 @@ const NoticePage = () => {
   const { token } = useSelector(selectAuth);
   const { category } = useParams();
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const searchPetByTitle = ({ search } ) => {
-    console.log("searchPetByTitle",search)
-    // if (search === '') {
-    //   setSearchParams('');
-    //   return
-    // }
-    setSearchParams({ search } );
+  const searchPetByTitle = value => {
+    setSearch(value);
   };
-
-  useEffect(() => {
-    const currentSearch = searchParams.get('search');
-
-    if (currentSearch) {
-      setSearch(currentSearch);
-    }
-  }, [searchParams]);
 
   useEffect(() => {
     if (
@@ -95,9 +80,8 @@ const NoticePage = () => {
   }, [category, search, token]);
 
   const changNavAndSearch = () => {
-    setSearch("");
+    setSearch('');
   };
-
 
   return (
     <div className={styles.container}>
@@ -105,7 +89,11 @@ const NoticePage = () => {
       <NoticesCategoriesNav changNavAndSearch={changNavAndSearch} />
       {loading && <Loader />}
       {error && <p className={styles.error}>...error</p>}
-      {items.length > 0 ? <NoticesCategoriesList items={items} /> : <p>There are no pets here...add please</p>}
+      {items.length > 0 ? (
+        <NoticesCategoriesList items={items} />
+      ) : (
+        <p>There are no pets here...add please</p>
+      )}
     </div>
   );
 };

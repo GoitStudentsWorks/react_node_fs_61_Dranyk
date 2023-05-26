@@ -1,39 +1,25 @@
 import styles from './notices-search.module.css';
 import iconSearch from './../../images/icons/svg/search.svg';
-import initialState from './initialState';
+// import initialState from './initialState';
 
 import { useState } from 'react';
 
 const NoticesSearch = ({ onSubmit }) => {
-  const [state, setState] = useState({ ...initialState });
+  const [state, setState] = useState('');
 
   const handleChange = ({ target }) => {
-    const { name, value } = target;
-    console.log("value", value);
-    
-    // if (value.trim() === '') {
-    //   setState(prevState => {
-    //     return { ...prevState, [name]: "" }
-    //   });
-    //     onSubmit(value);
-    //   };
-    setState(prevState => {
-      return { ...prevState, [name]: value }
-    });
-  };
+    const { value } = target;
+    setState(value);
 
-    
+    if (value.trim() === '') {
+      onSubmit(value);
+    }
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (state.search.trim() === '') {
-      return alert('Search field is empty');
-    }
-    const { search } = state;
-    onSubmit({ search });
+    onSubmit(state);
   };
-
-
 
   return (
     <>

@@ -2,26 +2,29 @@ import scss from './modal-notice.module.scss';
 import Loader from 'components/Loader/Loader';
 // import { CloseIcon } from 'images/icons/userPageIcons';
 import SvgH from 'images/icons/HeartIcon';
-import { selectLoading } from 'redux/auth/auth-selectors';
-import { useSelector } from 'react-redux';
+// import { selectLoading } from 'redux/auth/auth-selectors';
+// import { useSelector } from 'react-redux';
 // import useToggleModalWindow from '../../hooks/useToggleModalWindow';
 // import Modal from 'components/Modal/Modal';
 import { useEffect, useState } from 'react';
 import { fetchDataUser } from '../../shared/servises/pet-api';
 
 const ModalNotice = (data, favorite, checkFavorite) => {
-  const loading = useSelector(selectLoading);
+  const [isLoading, setIsLoading] = useState(false);
   const [state, setState] = useState('');
 
   useEffect(() => {
     const owner = data.ownerNotice;
     const fetchData = async owner => {
       try {
+        setIsLoading(true);
         const data = await fetchDataUser(owner);
         setState(data);
         return data;
       } catch (error) {
         return error;
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData(owner);
@@ -47,7 +50,7 @@ const ModalNotice = (data, favorite, checkFavorite) => {
 
   return (
     <>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <>

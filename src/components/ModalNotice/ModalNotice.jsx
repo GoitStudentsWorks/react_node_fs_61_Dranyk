@@ -8,8 +8,10 @@ import { useSelector } from 'react-redux';
 // import Modal from 'components/Modal/Modal';
 import { useEffect, useState } from 'react';
 import { fetchDataUser } from '../../shared/servises/pet-api';
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const ModalNotice = (data, favorite, checkFavorite) => {
+const ModalNotice = (data, favorite) => {
   const loading = useSelector(selectLoading);
   const [state, setState] = useState('');
 
@@ -44,6 +46,53 @@ const ModalNotice = (data, favorite, checkFavorite) => {
     }
     return category;
   };
+
+  const instance = axios.create({
+    baseURL: 'https://your-pet.onrender.com/api/',
+  });
+  
+  // const setToken = token => {
+  //   if (token) {
+  //     console.log(token);
+  //     return (instance.defaults.headers.authorization = `Bearer ${token}`);
+  //   }
+  //   instance.defaults.headers.authorization = '';
+  // };
+
+  const addToFavoriteNotices = async _id => {
+    const { data } = await instance.patch(`notices/addnoticetofavorite/${_id}`);
+    return data;
+  };
+  
+  const removeFromFavoriteNotices = async _id => {
+    const { data } = await instance.patch(`notices/removenoticefromfavorite/${_id}`);
+    return data;
+  };
+  
+  const fetchAddToFavorite = createAsyncThunk(
+    'notices/add-favorite',
+    async (_id, { rejectWithValue }) => {
+      try {
+        const data = await addToFavoriteNotices(_id);
+        return data;
+      } catch ({ response }) {
+        return rejectWithValue(response.data);
+      }
+    }
+  );
+  
+  const fetchRemoveFromFavorite = createAsyncThunk(
+    'notices/remove-favorite',
+    async (_id, { rejectWithValue }) => {
+      try {
+        const data = await removeFromFavoriteNotices(_id);
+        return data;
+      } catch ({ response }) {
+        return rejectWithValue(response.data);
+      }
+    }
+  );
+
 
   return (
     <>
@@ -164,12 +213,12 @@ const ModalNotice = (data, favorite, checkFavorite) => {
                 {favorite && (
                   <button
                     onClick={() => {
-                      checkFavorite(data._id);
+                      addToFavoriteNotices(data._id);
                     }}
                     className={`${scss.modal_notice__button_favorite}`}
                     type="button"
                   >
-                    Remove
+                    Add to
                     <SvgH
                       color={'#ffffff'}
                       className={scss.modal_notice__icon_favorite}
@@ -178,13 +227,12 @@ const ModalNotice = (data, favorite, checkFavorite) => {
                 )}
                 {!favorite && (
                   <button
-                    onClick={() => {
-                      checkFavorite(data._id);
-                    }}
+                    onClick={
+                      removeFromFavoriteNotices(data._id)}
                     className={`${scss.modal_notice__button_favorite}`}
                     type="button"
                   >
-                    Add to
+                    Remove
                     <SvgH
                       color={'#ffffff'}
                       className={scss.modal_notice__icon_favorite}

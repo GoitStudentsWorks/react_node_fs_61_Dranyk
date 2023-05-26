@@ -177,7 +177,7 @@
   font-family: 'Manrope';
   font-style: normal;
   font-weight: 500;
-  font-size: 1px;
+  font-size: 16px;
   line-height: 22px;
   display: flex;
   align-items: center;
@@ -185,6 +185,24 @@
     color: #000000;
     @media screen and (max-width: 767px) {
       font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    }
+}
+
+.modal_notice__item_continfo {
+  font-style: normal;
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  margin-left: 1px;
+    color: #FFC107;
+    @media screen and (max-width: 767px) {
+      font-weight: 500;
     font-size: 12px;
     line-height: 16px;
     }

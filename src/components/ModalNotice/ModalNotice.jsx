@@ -120,7 +120,7 @@ const ModalNotice = (data, favorite, checkFavorite) => {
                       <h4 className={scss.modal_notice__item_title}>Email:</h4>
                       <a
                         href={`mailto:${state.email}`}
-                        className={`${scss.modal_notice__item_description} ${scss.modal_notice__item_description_link}`}
+                        className={scss.modal_notice__item_continfo}
                         type="button"
                       >
                         {state.email}
@@ -130,7 +130,7 @@ const ModalNotice = (data, favorite, checkFavorite) => {
                       <h4 className={scss.modal_notice__item_title}>Phone:</h4>
                       <a
                         href={`tel:+${state.phone}`}
-                        className={`${scss.modal_notice__item_description}`}
+                        className={`${scss.modal_notice__item_continfo}`}
                         type="button"
                       >
                         {`+${state.phone}`}
@@ -154,13 +154,13 @@ const ModalNotice = (data, favorite, checkFavorite) => {
                 {data.comments}
               </article>
               <div>
-                {/* <a
-                    href={`tel:+${data.owner.phone}`}
+                <a
+                    href={`tel:+${state.phone}`}
                     className={`${scss.modal_notice__button_contact}`}
                     type="button"
                   >
                     Contact
-                  </a> */}
+                  </a>
                 {favorite && (
                   <button
                     onClick={() => {

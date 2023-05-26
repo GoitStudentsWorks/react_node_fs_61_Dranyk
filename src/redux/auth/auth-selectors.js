@@ -19,3 +19,4 @@ export const getFavorite = ({ auth }) => auth.user.favorite;
 export const getUserId = ({ auth }) => auth.user;
 
 export const selectError = ({ auth }) => auth.error;
+

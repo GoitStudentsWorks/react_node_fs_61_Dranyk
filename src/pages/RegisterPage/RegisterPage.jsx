@@ -27,13 +27,13 @@ const RegisterPage = () => {
     const { email, password, confirmPassword } = data;
     const dataSent = { email, password };
 
+    // --------- Check password length -------
     if (password.length < 6)
       return alert('"Password" length must be at least 6 characters long ');
 
     // setModalActive(true);
 
-    // Check password and confirmPassword (boolean)
-    // console.log(password, confirmPassword);
+    // --------- Check password and confirmPassword (boolean) -------
     if (password !== confirmPassword)
       return alert('confirmPassword must match the password');
 
@@ -48,10 +48,10 @@ const RegisterPage = () => {
         }
         if (payload.status === 409) {
           // setPassInUse(true);
-          return alert('Email in use')
-        };
+          return alert('Email in use');
+        }
       } catch ({ response }) {
-        // console.log(response.error.message);
+        console.log(response.error);
       }
     };
     sendData();

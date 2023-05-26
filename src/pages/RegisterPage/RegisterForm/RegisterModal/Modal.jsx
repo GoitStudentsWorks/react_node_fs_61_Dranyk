@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React from 'react';
 
 import './modal.scss';
@@ -8,12 +9,13 @@ const Modal = ({ active, setActive, children }) => {
     if (e.key === 'Escape') {
       setActive(false);
       // console.log('elrfghecorvno');
-      // <Navigate to="/user" />;
-      setTimeout(() => {
-        document.location.replace('/YourPet/user');
-      }, 50);
+      navigate('/user');
+       // setTimeout(() => {
+      //   document.location.replace('/YourPet/user');
+      // }, 50);
     }
   });
+  const navigate = useNavigate();
 
   return (
     <div

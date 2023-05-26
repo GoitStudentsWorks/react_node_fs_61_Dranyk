@@ -1,11 +1,8 @@
 .div {
-  /* height: 100%; */
-  /* width: 100vw; */
   height: 100vh;
   display: grid;
   justify-content: center;
   margin-top: 40px;
-  /* background-image: url('../../images/bg.png '); */
 }
 .title {
   font-family: 'Manrope';
@@ -15,14 +12,5 @@
   text-align: center;
   letter-spacing: 0.04em;
   margin-bottom: 40px;
-
-  /* Черный */
-
   color: #111111;
 }
-
-.modal {
-  margin-top: 0px;
-}
-
-

@@ -1,4 +1,5 @@
-import { Field, Form, Formik } from 'formik';
+import { object, string, number, mixed } from 'yup';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BiArrowBack } from 'react-icons/bi';
 import { BsGenderFemale } from 'react-icons/bs';
@@ -11,13 +12,44 @@ import PawIcon from 'images/icons/AddPetPageIcons/PawIcon';
 
 import css from '../AddPetPage.module.scss';
 
+// const citiesRegex =
+//   /^[a-zA-Z\\u0080-\\u024F.]+((?:[ -.|'])[a-zA-Z\\u0080-\\u024F]+)*$/;
+
 const ThirdStep = ({ next, prev, data, setStatus, currentStep }) => {
+  const isRightSize = file => {
+    // console.log('Выполняется проверка файла');
+    console.log(file.size);
+    return file.size <= 3000000;
+  };
+
+  const schema = object({
+    price: data.category === 'sell' ? number().min(0).required() : number(),
+    sex:
+      data.category !== 'your pet'
+        ? string().required('Choose male or female')
+        : string(),
+    location:
+      data.category !== 'your pet'
+        ? string('location must be a string')
+            // .matches(citiesRegex, 'Location should be in the form of a city')
+            .required('Enter a city')
+        : string('location must be a string'),
+    // .matches(
+    //   citiesRegex,
+    //   'Location should be in the form of a city'
+    // ),
+    image: mixed()
+      .required('You need to provide a image')
+      .test('fileSize', 'File must be less than 3 MB', isRightSize),
+    comments: string('Comment must be a string').min(8).max(120),
+  });
+
   const handleSubmit = (values, formik) => {
     setStatus(prev => ({
       ...prev,
       thirdIndicator: 'completed',
     }));
-    // console.log(values);
+    console.log('values', values);
     next(values, true, formik);
   };
 
@@ -31,15 +63,31 @@ const ThirdStep = ({ next, prev, data, setStatus, currentStep }) => {
     }));
   };
 
+  //  className={
+  //                 data.category !== 'your pet' && errors.comments
+  //                   ? css.textareaThirdStep
+  //                   : css.commentTextarea
+  //               }
+
+  const getCommentsInputClass = ({ category }, { comments }) => {
+    if (category !== 'your pet') return css.textareaThirdStep;
+
+    if (category !== 'your pet' && comments)
+      return `${css.textareaThirdStep} ${css.error}`;
+
+    if (comments) return `${css.commentTextarea} ${css.error}`;
+
+    return css.commentTextarea;
+  };
+
   return (
-    <Formik initialValues={data} onSubmit={handleSubmit}>
-      {({ values, setFieldValue }) => (
+    <Formik
+      initialValues={data}
+      validationSchema={schema}
+      onSubmit={handleSubmit}
+    >
+      {({ values, errors, setFieldValue }) => (
         <Form className={css.formStepThree}>
-          {/* <img
-            width="200"
-            alt="pet"
-            src={values.image !== '' ? URL.createObjectURL(values.image) : ''}
-          /> */}
           <div
             className={
               data.category !== 'your pet' ? css.thirdStepFormWrap : ''
@@ -101,9 +149,13 @@ const ThirdStep = ({ next, prev, data, setStatus, currentStep }) => {
                       id="male"
                     />
                   </div>
+                  <ErrorMessage
+                    className={css.errMessage}
+                    component="p"
+                    name="sex"
+                  />
                 </>
               )}
-
               <div
                 className={
                   data.category === 'your pet'
@@ -117,8 +169,13 @@ const ThirdStep = ({ next, prev, data, setStatus, currentStep }) => {
                     : 'Load the pet’s image:'} */}
                   Add photo
                 </p>
-                <label htmlFor="file" className={css.addImg}>
-                  {values.image !== '' ? (
+                <label
+                  htmlFor="image"
+                  className={
+                    errors.image ? `${css.addImg} ${css.addImgErr}` : css.addImg
+                  }
+                >
+                  {values.image ? (
                     <img
                       width="100%"
                       src={URL.createObjectURL(values.image)}
@@ -131,11 +188,16 @@ const ThirdStep = ({ next, prev, data, setStatus, currentStep }) => {
                 <input
                   type="file"
                   name="image"
-                  id="file"
+                  id="image"
                   className={css.addImgInput}
                   onChange={e => setFieldValue('image', e.target.files[0])}
                 />
               </div>
+              <ErrorMessage
+                className={css.errMessage}
+                component="p"
+                name="image"
+              />
             </div>
 
             <div
@@ -155,8 +217,15 @@ const ThirdStep = ({ next, prev, data, setStatus, currentStep }) => {
                   <Field
                     name="location"
                     id="location"
-                    className={css.input}
+                    className={
+                      errors.location ? `${css.input} ${css.error}` : css.input
+                    }
                     placeholder="Type of location"
+                  />
+                  <ErrorMessage
+                    className={css.errMessage}
+                    component="p"
+                    name="location"
                   />
                 </>
               )}
@@ -169,8 +238,15 @@ const ThirdStep = ({ next, prev, data, setStatus, currentStep }) => {
                   <Field
                     name="price"
                     id="price"
-                    className={css.input}
+                    className={
+                      errors.price ? `${css.input} ${css.error}` : css.input
+                    }
                     placeholder="Type of price"
+                  />
+                  <ErrorMessage
+                    className={css.errMessage}
+                    component="p"
+                    name="price"
                   />
                 </>
               )}
@@ -182,19 +258,20 @@ const ThirdStep = ({ next, prev, data, setStatus, currentStep }) => {
                 as="textarea"
                 name="comments"
                 id="comments"
-                className={
-                  data.category !== 'your pet'
-                    ? css.textareaThirdStep
-                    : css.commentTextarea
-                }
+                className={getCommentsInputClass(data, errors)}
                 placeholder="Type breed"
+              />
+              <ErrorMessage
+                className={css.errMessage}
+                component="p"
+                name="comments"
               />
             </div>
           </div>
 
           <div className={css.btnsThirdStepWrap}>
             <button className={css.nextBtn} type="submit">
-              Next
+              Done
               <PawIcon />
             </button>
             <button
@@ -203,7 +280,7 @@ const ThirdStep = ({ next, prev, data, setStatus, currentStep }) => {
               onClick={() => onCancelBtnClick(values)}
             >
               <BiArrowBack color="#54ADFF" size={24} />
-              Cancel
+              Back
             </button>
           </div>
         </Form>

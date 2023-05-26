@@ -35,12 +35,13 @@ const AddPetPage = () => {
   const [data, setData] = useState(initialData);
   const [currentStep, setCurrentStep] = useState(0);
   const [status, setStatus] = useState(initialStatus);
+
   const navigate = useNavigate();
 
   console.log(data);
 
   const makeRequest = async (resetForm, newData) => {
-    // console.log(data);
+    console.log(data);
     const values = Object.entries({ ...data, ...newData });
     let formData = new FormData();
 
@@ -56,6 +57,7 @@ const AddPetPage = () => {
     formData.forEach(el => console.log(el));
 
     try {
+      console.log('Пошел запрос...');
       if (data.category === 'your pet') {
         await API.postUserPet(formData);
 
@@ -75,6 +77,8 @@ const AddPetPage = () => {
 
   const handleNextStep = (newData, final = false, { resetForm } = {}) => {
     setData(prev => ({ ...prev, ...newData }));
+
+    console.log('final', final);
 
     if (final) {
       makeRequest(resetForm, newData);

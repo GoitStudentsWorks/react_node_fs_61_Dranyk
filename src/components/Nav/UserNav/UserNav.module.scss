@@ -1,5 +1,9 @@
 .div {
     display: flex;
+    margin-right: -20px; 
+    @media screen and (min-width: 767px) {
+        margin-right: 8px;
+    }
 }
 
 .user {

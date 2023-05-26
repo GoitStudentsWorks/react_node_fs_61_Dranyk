@@ -154,6 +154,7 @@
    display: flex;
    flex-direction: column;
    justify-content: center;
+   align-self: center;
    gap: 21px;
    margin-top: 24px;
 }
@@ -461,8 +462,20 @@ input::placeholder {
       // }
 }
 
+// Errors
 
+.error {
+   border-color: #F43F5E;
+}
 
+.addImgErr {
+   border: 1px solid #F43F5E;
+}
 
-
-
+.errMessage {
+   margin-top: 4px;
+   margin-left: 16px;
+   color: #F43F5E;
+   font-size: 12px;
+   line-height: 1.37;
+}

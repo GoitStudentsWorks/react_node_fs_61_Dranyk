@@ -30,7 +30,7 @@
 .deleteIcon {
     position: absolute;
     right: 16px;
-    top: 272px;
+    top: 290px;
 
     @media screen and (min-width: 768px) {
         right: 20px;
@@ -39,11 +39,17 @@
 }
 
 .petImg {
+    display: flex;
+    justify-content: center;
+        align-items: center;
     width: 240px;
     height: 240px;
+    overflow: hidden;
+    text-align: center;
 
     border-radius: 20px;
     margin-bottom: 20px;
+background-color: #CCE4FB;
 
     @media screen and (min-width: 768px) {
         margin-bottom: 0px;
@@ -57,6 +63,12 @@
         width: 162px;
         height: 162px;
     }
+}
+.petImg img {
+    display: block;
+        text-align: center;
+        max-width: 100%;
+        height: auto;
 }
 
 .text {

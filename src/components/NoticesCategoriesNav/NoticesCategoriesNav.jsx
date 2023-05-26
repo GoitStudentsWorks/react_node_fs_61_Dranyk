@@ -2,8 +2,8 @@ import styles from './noticescategories-nav.module.css';
 // import filters from "../../images/icons/svg/filters.svg";
 import plus from "../../images/icons/svg/plus-small.svg";
 
-import { NavLink } from "react-router-dom";
-
+import { NavLink, Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import { useAuth } from 'hooks/useAuth';
 import styled from "styled-components";
 
@@ -17,6 +17,8 @@ const StyledLink = styled(NavLink)`
 `;
 
 const NoticesCategoriesNav = ({changNavAndSearch}) => {
+
+  const location = useLocation();
 
   const { isLoggedIn } = useAuth();
   return (
@@ -46,15 +48,14 @@ const NoticesCategoriesNav = ({changNavAndSearch}) => {
             <img src={filters} alt="filters"/>
 
           </button> */}
-          <button
-          
-            type="button"
-            // onClick={showModal}
+         <Link
+            to="/add-pet"
+            state={{ from: location }}
             className={styles.functionalButton}
           >
             <span>Add Pet</span>
-          <img src={plus} alt="arrow"/>
-          </button>
+            <img src={plus} alt="arrow" />
+          </Link>
         </div>
       </div>
     </>
@@ -62,14 +63,3 @@ const NoticesCategoriesNav = ({changNavAndSearch}) => {
 };
 
 export default NoticesCategoriesNav;
-
-
-            
-
-
-
-
-
-
-
-

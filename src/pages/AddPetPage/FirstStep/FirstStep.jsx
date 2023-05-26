@@ -1,11 +1,15 @@
 import { Formik, Field, Form } from 'formik';
 import { BiArrowBack } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import PawIcon from 'images/icons/AddPetPageIcons/PawIcon';
 
 import css from '../AddPetPage.module.scss';
 
 const FirstStep = ({ data, next, setStatus, currentStep }) => {
+  const location = useLocation();
+
   const handleSubmit = values => {
     setStatus(prev => ({
       ...prev,
@@ -100,14 +104,10 @@ const FirstStep = ({ data, next, setStatus, currentStep }) => {
               Next
               <PawIcon />
             </button>
-            <button
-              className={css.cancelBtn}
-              type="button"
-              // onClick={onCancelBtnCLick}
-            >
+            <Link className={css.cancelBtn} to={location.state?.from || '/'}>
               <BiArrowBack color="#54ADFF" size={24} />
               Cancel
-            </button>
+            </Link>
           </div>
         </Form>
       )}

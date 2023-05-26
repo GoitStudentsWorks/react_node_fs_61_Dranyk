@@ -1,43 +1,43 @@
-import { useDispatch } from 'react-redux';
-// import { logOut } from 'redux/auth/operations';
-import { logout } from 'redux/auth/auth-operations';
-import scss from './modal-approve-action.module.scss'
-import PropTypes from 'prop-types';
+// import { useDispatch } from 'react-redux';
+// // import { logOut } from 'redux/auth/operations';
+// import { logout } from 'redux/auth/auth-operations';
+// import scss from './modal-approve-action.module.scss'
+// import PropTypes from 'prop-types';
+// import useToggleModalWindow from '../../hooks/useToggleModalWindow';
 
-const ModalApproveAction = ({ onClose }) => {
+// const { closeModal } = useToggleModalWindow();
+// const ModalApproveAction = ({ closeModal }) => {
 
-  const dispatch = useDispatch();
+//   const dispatch = useDispatch();
+ 
+//   const handleLogOut = () => {
+//    closeModal();
+//     dispatch(logout());
+//   };
 
-  const handleLogOut = () => {
-   onClose();
-    dispatch(logout());
-  };
+//   return (
 
-  return (
+// <div className={scss.modal_approve_action__box}>
+// <h2 className={scss.modal_approve_action__text}>Delete adverstiment?</h2>
+// <h3 className={scss.modal_approve_action__question}>Are you sure you want to delete “Cute dog looking for a home”? You can`t undo this action.</h3>
+// <div>
+// <button
+//    onClick={closeModal} type="button" >
+//    Cancel
+// </button>
+// <button
+//    className={scss.modal_approve_action__button}
+//    type="button"
+//    onClick={handleLogOut}>
+//    Yes
+// </button>
+// </div>
+// </div>
+// );
+// };
 
-<div className={scss.modal_approve_action__box}>
-<h2 className={scss.modal_approve_action__text}>Delete adverstiment?</h2>
-<h3 className={scss.modal_approve_action__question}>Are you sure you want to delete “Cute dog looking for a home”? You can`t undo this action.</h3>
-<div>
-<button 
-   className={scss.modal_notice__close}
-   type="button"
-   onClick={onClose}>
-   Cancel
-</button>
-<button 
-   className={scss.modal_approve_action__button}
-   type="button"
-   onClick={handleLogOut}>
-   Yes
-</button>                
-</div>
-</div>
-);
-};
+// export default ModalApproveAction;
 
-export default ModalApproveAction;
-
-ModalApproveAction.propsType = {
-  onClose: PropTypes.func.isRequired,
-};
+// ModalApproveAction.propsType = {
+//    closeModal: PropTypes.func.isRequired,
+// };

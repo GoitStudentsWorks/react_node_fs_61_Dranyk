@@ -1,19 +1,21 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
 
 import UserPageTitle from './UserPageTitle/UserPageTitle';
 import UserPageCard from './UserPageCard/UserPageCard';
 import Container from 'components/Container/Container';
 import PetsList from './PetsList/PetsList';
+import { AddPetIcon } from 'images/icons/userPageIcons';
+// import Loader from 'components/Loader/Loader';
 
 import css from './UserPage.module.css';
 
-import { AddPetIcon } from 'images/icons/userPageIcons';
-
 const UserPage = () => {
-  const navigate = useNavigate();
-  const handleAddPet = () => {
-    navigate('/add-pet');
-  };
+  const location = useLocation();
+  // const loading = useSelector(({ auth: { loading } }) => loading);
+
   return (
     <Container>
       <div className={css.wrapper}>
@@ -26,10 +28,14 @@ const UserPage = () => {
           <div className={css.wrapperTitle}>
             <UserPageTitle text={'My pets:'} />
 
-            <button className={css.button} onClick={handleAddPet}>
+            <Link
+              to="/add-pet"
+              state={{ from: location }}
+              className={css.button}
+            >
               Add Pet
               <AddPetIcon color={'#FFFFFF'} />
-            </button>
+            </Link>
           </div>
 
           <PetsList />

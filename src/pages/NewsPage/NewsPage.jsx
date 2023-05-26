@@ -33,10 +33,6 @@ const NewsPage = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchNews());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(fetchNews({ searchQuery }));
   }, [dispatch, searchQuery]);
 
@@ -47,14 +43,11 @@ const NewsPage = () => {
     dispatch(fetchNews({ searchQuery, page }));
   };
 
-  if (isLoading && !error) {
-    return <Loader />;
-  }
-
   return (
     <>
       <h1 className={styles.title}>News</h1>
       <NewsForm handleSearchChange={handleSearchChange} />
+      {isLoading && !error && <Loader />}
       {newsItems.length > 0 && <NewsList news={newsItems} />}
       {newsItems.length > 0 && (
         <div className={styles.paginationWrapper}>

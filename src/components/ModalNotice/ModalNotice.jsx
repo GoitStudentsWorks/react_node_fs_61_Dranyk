@@ -51,15 +51,20 @@ const ModalNotice = (data, favorite, checkFavorite) => {
         <Loader />
       ) : (
         <>
-            <li key={data._id} className={scss.listItems}>
-              <div className={scss.modal_notice__content}>
-                <div className={scss.modal_notice__content_info}>
-                  <div >
-                  <button  onClick={closeModal} type="button"  >
-                    <CloseIcon color={'#54ADFF'} className={scss.modal_notice__close } width="24" height="24"/>
+          <li key={data._id} className={scss.listItems}>
+            <div className={scss.modal_notice__content}>
+              <div className={scss.modal_notice__content_info}>
+                {/* <div onClick={handleDown}>
+                  <button onClick={closeModal} type="button">
+                    <CloseIcon
+                      color={'#54ADFF'}
+                      className={scss.modal_notice__close}
+                      width="24"
+                      height="24"
+                    />
                   </button>
-                  {isModalOpen && <Modal closeModal={closeModal}></Modal>} */}
-                {/* </div> */}
+                  {isModalOpen && <Modal closeModal={closeModal}></Modal>}
+                </div> */}
                 <div>
                   <img
                     className={scss.modal_notice__image}
@@ -95,45 +100,41 @@ const ModalNotice = (data, favorite, checkFavorite) => {
                       <h4 className={scss.modal_notice__item_title}>Breed:</h4>
                       <p className={scss.modal_notice__item_description}>
                         {data.breed}
-                        </p>
-                      </li>
-                      <li className={scss.modal_notice__item}>
-                        <h4 className={scss.modal_notice__item_title}>
-                          Place:
-                        </h4>
-                        <p className={scss.modal_notice__item_description}>
-                          {data.location}
-                        </p>
-                      </li>
-                      <li className={scss.modal_notice__item}>
-                        <h4 className={scss.modal_notice__item_title}>
-                          The sex:
-                        </h4>
-                        <p className={scss.modal_notice__item_description}>
-                          {data.sex}
-                        </p>
-                      </li>
-                      <li className={scss.modal_notice__item}>
-                        <h4 className={scss.modal_notice__item_title}>
-                          Email:
-                        </h4>
-                        {/* <a
-                          href={`mailto:${data.owner.email}`}
-                          className={`${scss.modal_notice__item_description} ${scss.modal_notice__item_description_link}`}
-                          type="button"
-                        >
-                          {data.owner.email}
-                        </a> */}
+                      </p>
+                    </li>
+                    <li className={scss.modal_notice__item}>
+                      <h4 className={scss.modal_notice__item_title}>Place:</h4>
+                      <p className={scss.modal_notice__item_description}>
+                        {data.location}
+                      </p>
+                    </li>
+                    <li className={scss.modal_notice__item}>
+                      <h4 className={scss.modal_notice__item_title}>
+                        The sex:
+                      </h4>
+                      <p className={scss.modal_notice__item_description}>
+                        {data.sex}
+                      </p>
+                    </li>
+                    <li className={scss.modal_notice__item}>
+                      <h4 className={scss.modal_notice__item_title}>Email:</h4>
+                      <a
+                        href={`mailto:${state.email}`}
+                        className={`${scss.modal_notice__item_description} ${scss.modal_notice__item_description_link}`}
+                        type="button"
+                      >
+                        {state.email}
+                      </a>
                     </li>
                     <li className={scss.modal_notice__item}>
                       <h4 className={scss.modal_notice__item_title}>Phone:</h4>
-                      {/* <a
-                          href={`tel:+${data.owner.phone}`}
-                          className={`${scss.modal_notice__item_description}`}
-                          type="button"
-                        >
-                          {`+${data.owner.phone}`}
-                        </a> */}
+                      <a
+                        href={`tel:+${state.phone}`}
+                        className={`${scss.modal_notice__item_description}`}
+                        type="button"
+                      >
+                        {`+${state.phone}`}
+                      </a>
                     </li>
                     {data.category === 'sell' && (
                       <li className={scss.modal_notice__item}>

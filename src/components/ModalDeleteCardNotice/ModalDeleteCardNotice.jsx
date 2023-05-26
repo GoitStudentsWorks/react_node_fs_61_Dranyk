@@ -1,20 +1,19 @@
-import { useDispatch } from 'react-redux';
-
-
+import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../Modal/Modal';
-import { fetchDeleteNotice } from '../../redux/notices/noticesOperations';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import css from './modalDeleteCardNotice.module.css';
+import { deleteNotice } from "../../shared/servises/pet-api"
+import { selectAuth } from './../../redux/auth/auth-selectors';
 
 const ModalDeleteCardNotice = ({ closeModal, _id, title, handleDelete }) => {
   const dispatch = useDispatch();
-  // console.log(_id);
+  const { token } = useSelector(selectAuth);
   const handleModalClose = () => {
     closeModal();
   };
 
   const handleModalCloseDelete = () => {
-    dispatch(fetchDeleteNotice(_id));
+    dispatch(deleteNotice(_id, token));
     console.log(_id);
     closeModal();
   };

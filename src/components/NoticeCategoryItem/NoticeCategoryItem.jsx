@@ -16,13 +16,10 @@ import Modal from '../Modal/Modal';
 // import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
 import ModalDeleteCardNotice from '../ModalDeleteCardNotice/ModalDeleteCardNotice'
 import { getUserId } from '../../redux/auth/auth-selectors';
-import {
-  fetchAddToFavorite,
-  fetchRemoveFromFavorite,
-  fetchDeleteNotice,
-} from '../../redux/notices/noticesOperations';
 import ModalNotice from '../ModalNotice/ModalNotice';
 import css from './notice-categories-item.module.css';
+import { selectAuth } from './../../redux/auth/auth-selectors';
+import {addNoticeToFavorite, removeNoticeFromFavorite, deleteNotice } from "../../shared/servises/pet-api"
 
 const NoticeCategoryItem = ({
   _id,
@@ -54,7 +51,7 @@ const NoticeCategoryItem = ({
     namePet: namePet,
     price: price,
   };
-
+  const { token } = useSelector(selectAuth);
   const [currentNotice, setCurrentNotice] = useState({});
   const dispatch = useDispatch();
   const { isModalOpen, openModal, closeModal } = useToggleModalWindow();
@@ -83,14 +80,11 @@ const NoticeCategoryItem = ({
   };
 
   const handleFavoriteToggle = async () => {
-      const {
-      user: { favorite: fav },
-    } = userId;
-  
-  
+      const { favorite: fav } = userId;
+
     if (fav.includes(_id)) {
       try {
-        dispatch(fetchRemoveFromFavorite(_id));
+        dispatch(removeNoticeFromFavorite (_id, token));
         toasty.toastSuccess('remove from favorite');
 
         return;
@@ -99,7 +93,9 @@ const NoticeCategoryItem = ({
       }
     } else {
       try {
-        dispatch(fetchAddToFavorite(_id));
+        dispatch(addNoticeToFavorite(_id,token));
+        console.log(_id);
+
         toasty.toastSuccess('add to favorite');
 
         return;
@@ -123,7 +119,8 @@ const NoticeCategoryItem = ({
     return false;
   };
   const handleDelete = _id => {
-    dispatch(fetchDeleteNotice(_id));
+    dispatch(deleteNotice(_id));
+    console.log(_id);
     toasty.toastSuccess('Deleted successful');
   };
 

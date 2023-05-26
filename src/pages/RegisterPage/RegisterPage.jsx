@@ -19,14 +19,19 @@ const RegisterPage = () => {
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const [modalActive, setModalActive] = useState(false);
+  // const [passInUse, setPassInUse] = useState(false);
 
   const dispatch = useDispatch();
 
   const handleSignup = data => {
     const { email, password, confirmPassword } = data;
     const dataSent = { email, password };
-    // console.log(data);
+
+    if (password.length < 6)
+      return alert('"Password" length must be at least 6 characters long ');
+
     // setModalActive(true);
+
     // Check password and confirmPassword (boolean)
     // console.log(password, confirmPassword);
     if (password !== confirmPassword)
@@ -41,7 +46,10 @@ const RegisterPage = () => {
           setModalActive(true);
           localStorage.setItem('user', JSON.stringify(payload));
         }
-        if (payload.status === 409) return alert('Email in use');
+        if (payload.status === 409) {
+          // setPassInUse(true);
+          return alert('Email in use')
+        };
       } catch ({ response }) {
         // console.log(response.error.message);
       }
@@ -57,7 +65,6 @@ const RegisterPage = () => {
     <Container>
       {loading && !error && <Loader />}
       {modalActive && <UserPage />}
-      {/* <div className={styles.modal}> */}
       <Modal active={modalActive} setActive={setModalActive}>
         <h2 className={styles.modal__header}>Congrats!</h2>
         <h3 className={styles.modal_title}> Youre registration is success</h3>
@@ -70,9 +77,9 @@ const RegisterPage = () => {
           </div>
         </button>
       </Modal>
-      {/* </div> */}
       <div className={css.div}>
-        <RegisterForm onSubmit={handleSignup} />
+        {/* {passInUse && <Navigate to="/login" />} */}
+        {!modalActive && <RegisterForm onSubmit={handleSignup} />}
       </div>
     </Container>
   );

@@ -1,29 +1,31 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
+
+// import { selectAuth } from '../../redux/auth/auth-selectors';
+// import { useSelector } from 'react-redux';
+
+
 const instance = axios.create({
   baseURL: 'https://your-pet.onrender.com/api/',
 });
 
-const setToken = token => {
-  if (token) {
-    console.log(token);
-    return (instance.defaults.headers.authorization = `Bearer ${token}`);
-  }
-  instance.defaults.headers.authorization = '';
-};
+// const setToken = token => {
+//   if (token) {
+//     console.log(token);
+//     return (instance.defaults.headers.authorization = `Bearer ${token}`);
+//   }
+//   instance.defaults.headers.authorization = '';
+// };
 
 
-export const deleteNotice = async id => {
-  const { data } = await instance.delete(`/notices/${id}`);
+export const deleteNotice = async _id => {
+  const { data } = await instance.delete(`/notices/${_id}`);
   return data;
 };
 
-
-export const addToFavoriteNotices = async (_id, token) => {
-  setToken(token);
-  const { data} = await instance.patch(`notices/addnoticetofavorite/${_id}`, token);
-     console.log(data);
+export const addToFavoriteNotices = async _id => {
+  const { data } = await instance.patch(`notices/addnoticetofavorite/${_id}`);
   return data;
 };
 
@@ -32,25 +34,11 @@ export const removeFromFavoriteNotices = async _id => {
   return data;
 };
 
-export const fetchDeleteNotice = createAsyncThunk(
-  'notice/delete',
-  async ({ _id, token }, { rejectWithValue }) => {
-    try {
-      const result = await deleteNotice(_id, token);
-      return result;
-    } catch ({ response }) {
-      return rejectWithValue(response.data);
-    }
-  }
-);
-
-
 export const fetchAddToFavorite = createAsyncThunk(
-  'notices/addnoticetofavorite',
-  async ({ _id, token }, { rejectWithValue }) => {
+  'notices/add-favorite',
+  async (_id, { rejectWithValue }) => {
     try {
-      const data = await addToFavoriteNotices(_id, token);
-    console.log(data);
+      const data = await addToFavoriteNotices(_id);
       return data;
     } catch ({ response }) {
       return rejectWithValue(response.data);
@@ -59,12 +47,22 @@ export const fetchAddToFavorite = createAsyncThunk(
 );
 
 export const fetchRemoveFromFavorite = createAsyncThunk(
-  'notices/removenoticefromfavorite',
+  'notices/remove-favorite',
   async (_id, { rejectWithValue }) => {
     try {
       const data = await removeFromFavoriteNotices(_id);
-      console.log(data);
       return data;
+    } catch ({ response }) {
+      return rejectWithValue(response.data);
+    }
+  }
+);
+export const fetchDeleteNotice = createAsyncThunk(
+  'notice/delete',
+  async (_id, { rejectWithValue }) => {
+    try {
+      await deleteNotice(_id);
+      return _id;
     } catch ({ response }) {
       return rejectWithValue(response.data);
     }

@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchDataUser } from '../../shared/servises/pet-api';
 import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+// import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const ModalNotice = (data, favorite) => {
   const loading = useSelector(selectLoading);
@@ -69,29 +69,29 @@ const ModalNotice = (data, favorite) => {
     return data;
   };
   
-  const fetchAddToFavorite = createAsyncThunk(
-    'notices/add-favorite',
-    async (_id, { rejectWithValue }) => {
-      try {
-        const data = await addToFavoriteNotices(_id);
-        return data;
-      } catch ({ response }) {
-        return rejectWithValue(response.data);
-      }
-    }
-  );
+  // const fetchAddToFavorite = createAsyncThunk(
+  //   'notices/add-favorite',
+  //   async (_id, { rejectWithValue }) => {
+  //     try {
+  //       const data = await addToFavoriteNotices(_id);
+  //       return data;
+  //     } catch ({ response }) {
+  //       return rejectWithValue(response.data);
+  //     }
+  //   }
+  // );
   
-  const fetchRemoveFromFavorite = createAsyncThunk(
-    'notices/remove-favorite',
-    async (_id, { rejectWithValue }) => {
-      try {
-        const data = await removeFromFavoriteNotices(_id);
-        return data;
-      } catch ({ response }) {
-        return rejectWithValue(response.data);
-      }
-    }
-  );
+  // const fetchRemoveFromFavorite = createAsyncThunk(
+  //   'notices/remove-favorite',
+  //   async (_id, { rejectWithValue }) => {
+  //     try {
+  //       const data = await removeFromFavoriteNotices(_id);
+  //       return data;
+  //     } catch ({ response }) {
+  //       return rejectWithValue(response.data);
+  //     }
+  //   }
+  // );
 
 
   return (

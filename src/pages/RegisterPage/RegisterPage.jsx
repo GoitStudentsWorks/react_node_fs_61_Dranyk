@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, Navigate } from 'react-router-dom/dist';
+import { NavLink } from 'react-router-dom/dist';
 
 import UserPage from '../UserPage/UserPage';
 import Modal from './RegisterForm/RegisterModal/Modal';

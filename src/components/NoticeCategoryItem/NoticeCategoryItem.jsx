@@ -114,18 +114,14 @@ const NoticeCategoryItem = ({
     }
   };
   const checkFavorite = _id => {
-    const {
-      user: { favorite: fav },
-    } = userId;
+    const { favorite: fav } = userId;
     if (fav.includes(_id)) {
       return true;
     }
     return false;
   };
   const checkOwner = ownerNotice => {
-    const {
-      user: { _id: idd },
-    } = userId;
+    const { _id: idd } = userId;
     if (ownerNotice === idd) {
       return true;
     }

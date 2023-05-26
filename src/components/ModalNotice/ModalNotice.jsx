@@ -164,7 +164,7 @@ const ModalNotice = (data, favorite, checkFavorite) => {
                   >
                     Contact
                   </a> */}
-                {favorite && (
+                {/* {favorite && (
                   <button
                     onClick={() => {
                       checkFavorite(data._id);
@@ -178,8 +178,8 @@ const ModalNotice = (data, favorite, checkFavorite) => {
                       className={scss.modal_notice__icon_favorite}
                     />
                   </button>
-                )}
-                {!favorite && (
+                )} */}
+                {favorite && (
                   <button
                     onClick={() => {
                       checkFavorite(data._id);

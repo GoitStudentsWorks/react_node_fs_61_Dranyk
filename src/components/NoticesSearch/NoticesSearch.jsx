@@ -7,28 +7,22 @@ import { useState } from 'react';
 const NoticesSearch = ({ onSubmit }) => {
   const [state, setState] = useState({ ...initialState });
 
-
-  // const [state, setState] = useState('');
-
-  // const handleChange = ({ target }) => {
-  //   const value = target.value;
-  //   setState(value);
-  //   if (value.trim() === '') {
-  //     onSubmit(value);
-  //   }
-  // };
-
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   onSubmit(state);
-  // };
-
   const handleChange = ({ target }) => {
     const { name, value } = target;
+    console.log("value", value);
+    
+    // if (value.trim() === '') {
+    //   setState(prevState => {
+    //     return { ...prevState, [name]: "" }
+    //   });
+    //     onSubmit(value);
+    //   };
     setState(prevState => {
       return { ...prevState, [name]: value }
     });
   };
+
+    
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -38,6 +32,8 @@ const NoticesSearch = ({ onSubmit }) => {
     const { search } = state;
     onSubmit({ search });
   };
+
+
 
   return (
     <>

@@ -21,9 +21,16 @@ const NoticePage = () => {
   const [search, setSearch] = useState('');
   const { token } = useSelector(selectAuth);
   const { category } = useParams();
+
   const [searchParams, setSearchParams] = useSearchParams();
-  const searchPetByTitle = ({ search }) => {
-    setSearchParams({ search });
+
+  const searchPetByTitle = ({ search } ) => {
+    console.log("searchPetByTitle",search)
+    // if (search === '') {
+    //   setSearchParams('');
+    //   return
+    // }
+    setSearchParams({ search } );
   };
 
   useEffect(() => {
@@ -104,7 +111,3 @@ const NoticePage = () => {
 };
 
 export default NoticePage;
-
-//   if(search !== ""){
-//   setSearch("")
-// }

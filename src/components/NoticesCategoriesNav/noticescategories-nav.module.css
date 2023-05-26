@@ -121,7 +121,7 @@
 }
 
 @media screen and (min-width: 48em) {
-    .functional__button {
+    .functionalButton {
         border: 2px solid #54adff;
     }
 }

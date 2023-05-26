@@ -1,5 +1,5 @@
 import styles from './noticescategories-nav.module.css';
-import filters from "../../images/icons/svg/filters.svg";
+// import filters from "../../images/icons/svg/filters.svg";
 import plus from "../../images/icons/svg/plus-small.svg";
 
 import { NavLink } from "react-router-dom";
@@ -41,11 +41,11 @@ const NoticesCategoriesNav = ({changNavAndSearch}) => {
         </nav>
           
               <div className={styles.functional}>
-          <button type="button" className={styles.functionalButton}>
+          {/* <button type="button" className={styles.functionalButton}>
             <span>Filter</span>
             <img src={filters} alt="filters"/>
 
-          </button>
+          </button> */}
           <button
           
             type="button"

@@ -5,22 +5,35 @@ import SvgH from 'images/icons/HeartIcon';
 import { selectLoading } from 'redux/auth/auth-selectors';
 import { useSelector } from 'react-redux';
 // import useToggleModalWindow from '../../hooks/useToggleModalWindow';
+// import Modal from 'components/Modal/Modal';
+import { useEffect, useState } from 'react';
+import { fetchDataUser } from '../../shared/servises/pet-api';
 
 const ModalNotice = (data, favorite, checkFavorite) => {
   const loading = useSelector(selectLoading);
+  const [state, setState] = useState('');
 
-  // const formatDate = ({ dateOfBirth }) => {
-  //   if (!dateOfBirth) {
-  //     const formatedDate = '00.00.0000';
-  //     return formatedDate;
+  useEffect(() => {
+    const owner = data.ownerNotice;
+    const fetchData = async owner => {
+      try {
+        const data = await fetchDataUser(owner);
+        setState(data);
+        return data;
+      } catch (error) {
+        return error;
+      }
+    };
+    fetchData(owner);
+  }, [data.ownerNotice]);
+
+  // const { isModalOpen, closeModal } = useToggleModalWindow();
+
+  // const handleDown = e => {
+  //   if (e.currentTarget === e.target) {
+  //     closeModal();
   //   }
-  //   const birthDateToObject = new Date(dateOfBirth);
-  //   const formatedDate =
-  //     birthDateToObject.toLocaleDateString('ua') || '00.00.0000';
-  //   return formatedDate;
   // };
-
-  // const { closeModal } = useToggleModalWindow();
 
   const getCategoryNotice = category => {
     if (category === 'for-free') {
@@ -38,14 +51,15 @@ const ModalNotice = (data, favorite, checkFavorite) => {
         <Loader />
       ) : (
         <>
-          <li key={data._id} className={scss.listItems}>
-            <div className={scss.modal_notice__content}>
-              <div className={scss.modal_notice__content_info}>
-                {/* <div >
+            <li key={data._id} className={scss.listItems}>
+              <div className={scss.modal_notice__content}>
+                <div className={scss.modal_notice__content_info}>
+                  <div >
                   <button  onClick={closeModal} type="button"  >
                     <CloseIcon color={'#54ADFF'} className={scss.modal_notice__close } width="24" height="24"/>
                   </button>
-                  </div> */}
+                  {isModalOpen && <Modal closeModal={closeModal}></Modal>} */}
+                {/* </div> */}
                 <div>
                   <img
                     className={scss.modal_notice__image}
@@ -81,25 +95,29 @@ const ModalNotice = (data, favorite, checkFavorite) => {
                       <h4 className={scss.modal_notice__item_title}>Breed:</h4>
                       <p className={scss.modal_notice__item_description}>
                         {data.breed}
-                      </p>
-                    </li>
-                    <li className={scss.modal_notice__item}>
-                      <h4 className={scss.modal_notice__item_title}>Place:</h4>
-                      <p className={scss.modal_notice__item_description}>
-                        {data.location}
-                      </p>
-                    </li>
-                    <li className={scss.modal_notice__item}>
-                      <h4 className={scss.modal_notice__item_title}>
-                        The sex:
-                      </h4>
-                      <p className={scss.modal_notice__item_description}>
-                        {data.sex}
-                      </p>
-                    </li>
-                    <li className={scss.modal_notice__item}>
-                      <h4 className={scss.modal_notice__item_title}>Email:</h4>
-                      {/* <a
+                        </p>
+                      </li>
+                      <li className={scss.modal_notice__item}>
+                        <h4 className={scss.modal_notice__item_title}>
+                          Place:
+                        </h4>
+                        <p className={scss.modal_notice__item_description}>
+                          {data.location}
+                        </p>
+                      </li>
+                      <li className={scss.modal_notice__item}>
+                        <h4 className={scss.modal_notice__item_title}>
+                          The sex:
+                        </h4>
+                        <p className={scss.modal_notice__item_description}>
+                          {data.sex}
+                        </p>
+                      </li>
+                      <li className={scss.modal_notice__item}>
+                        <h4 className={scss.modal_notice__item_title}>
+                          Email:
+                        </h4>
+                        {/* <a
                           href={`mailto:${data.owner.email}`}
                           className={`${scss.modal_notice__item_description} ${scss.modal_notice__item_description_link}`}
                           type="button"

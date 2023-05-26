@@ -13,24 +13,15 @@ import {
   ConfirmIcon,
 } from 'images/icons/userPageIcons';
 
-const initialValues = {
-  name: '',
-  email: '',
-  birthday: '',
-  phone: '',
-  city: '',
-  image: null,
-};
+import photodefault from 'images/img/userPhotoDefault.png';
 
 const UserFormData = () => {
   const [userData, setUserData] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [isEditable, setIsEditable] = useState(true);
-  // const [isSubmittingData, setIsSubmittingData] = useState(false);
+  const [isSubmittingData, setIsSubmittingData] = useState(false);
   const [activeField, setActiveField] = useState(null);
 
   const toggleEditable = field => {
-    // setIsEditable(prevState => !prevState);
     if (activeField === field) {
       setActiveField(null);
     } else {
@@ -57,15 +48,42 @@ const UserFormData = () => {
     setIsSubmitting(false);
   };
 
-  const handleFormSubmit = async values => {
+  const handleAvatarUpdate = async values => {
     try {
       setIsSubmitting(true);
       const formData = new FormData();
       formData.append('image', values.image);
-
       await instance.patch('/api/auth/users/updateavatar', formData);
     } catch (error) {
       console.error('Error updating avatar:', error);
+    }
+  };
+
+  const handleUserDataUpdate = async (values, fieldName) => {
+    try {
+      const userId = values.id;
+      const updatedData = {
+        [fieldName]: values[fieldName],
+      };
+
+      await instance.put(`/api/auth/users/update/${userId}`, updatedData);
+      console.log(updatedData);
+    } catch (error) {
+      console.error('Error updating user data:', error);
+    }
+  };
+
+  const handleFormSubmit = async values => {
+    try {
+      setIsSubmitting(true);
+      if (values.image) {
+        await handleAvatarUpdate(values);
+      }
+
+      await handleUserDataUpdate(values, activeField);
+      setIsSubmittingData(true);
+    } catch (error) {
+      console.error('Error updating data:', error);
     }
   };
 
@@ -73,29 +91,22 @@ const UserFormData = () => {
     setFieldValue('image', null);
   };
 
-  // const initialValues = {
-  //   name: userData.name ?? '',
-  //   email: userData.email || '',
-  //   birthday: userData.birthday ?? '',
-  //   phone: userData.phone ?? '',
-  //   city: userData.city ?? '',
-  //   image: null,
-  // };
-
   const DataUser = userData.map(
     ({ _id, name, email, Birthday, Phone, City, avatarURL }, index) => (
       <div key={index}>
-        <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
+        <Formik initialValues={{ id: _id }} onSubmit={handleFormSubmit}>
           {formikProps => (
             <Form autoComplete="off" className={css.form}>
               <div>
                 <div className={css.photo}>
-                  {(formikProps.values.image && (
+                  {formikProps.values.image ? (
                     <img
                       src={URL.createObjectURL(formikProps.values.image)}
                       alt="Preview"
                     />
-                  )) || <img src={avatarURL} alt="name" />}
+                  ) : (
+                    <img src={avatarURL || photodefault} alt="name" />
+                  )}
                 </div>
 
                 {(formikProps.values.image && (
@@ -134,17 +145,19 @@ const UserFormData = () => {
               <div className={css.formFieldWrapper}>
                 <label className={css.fieldWrapper}>
                   <span className={css.fieldName}>Name:</span>
+
                   <Field
                     className={css.field}
                     type="text"
                     placeholder="Enter name"
                     name="name"
-                    value={formikProps.values.name || name}
+                    value={formikProps.values.name ?? name}
                     disabled={activeField !== 'name'}
                     autoFocus={activeField === 'name'}
                   />
                   {!activeField || activeField !== 'name' ? (
                     <button
+                      type="button"
                       className={css.editBtn}
                       onClick={() => toggleEditable('name')}
                     >
@@ -153,8 +166,7 @@ const UserFormData = () => {
                   ) : (
                     <button className={css.editBtn} type="submit">
                       <ConfirmIcon
-                        // color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
-                        color={'#54ADFF'}
+                        color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
                       />
                     </button>
                   )}
@@ -168,13 +180,14 @@ const UserFormData = () => {
                     type="text"
                     placeholder="Enter email"
                     name="email"
-                    value={formikProps.values.email || email}
+                    value={formikProps.values.email ?? email}
                     disabled={activeField !== 'email'}
                     autoFocus={activeField === 'email'}
                   />
 
-                  {!activeField || activeField !== 'email' ? (
+                  {activeField !== 'email' ? (
                     <button
+                      type="button"
                       className={css.editBtn}
                       onClick={() => toggleEditable('email')}
                     >
@@ -183,8 +196,7 @@ const UserFormData = () => {
                   ) : (
                     <button className={css.editBtn} type="submit">
                       <ConfirmIcon
-                        // color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
-                        color={'#54ADFF'}
+                        color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
                       />
                     </button>
                   )}
@@ -197,27 +209,27 @@ const UserFormData = () => {
                     className={css.field}
                     type="text"
                     placeholder="Enter birthday"
-                    name="birthday"
-                    value={formikProps.values.birthday || Birthday}
-                    disabled={activeField !== 'birthday'}
-                    autoFocus={activeField === 'birthday'}
+                    name="Birthday"
+                    value={formikProps.values.Birthday ?? Birthday}
+                    disabled={activeField !== 'Birthday'}
+                    autoFocus={activeField === 'Birthday'}
                   />
-                  {!activeField || activeField !== 'birthday' ? (
+                  {!activeField || activeField !== 'Birthday' ? (
                     <button
+                      type="button"
                       className={css.editBtn}
-                      onClick={() => toggleEditable('birthday')}
+                      onClick={() => toggleEditable('Birthday')}
                     >
                       <EditIcon color={'#54ADFF'} />
                     </button>
                   ) : (
                     <button className={css.editBtn} type="submit">
                       <ConfirmIcon
-                        // color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
-                        color={'#54ADFF'}
+                        color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
                       />
                     </button>
                   )}
-                  <ErrorMessage name="birthday" component="div" />
+                  <ErrorMessage name="Birthday" component="div" />
                 </label>
                 <label className={css.fieldWrapper}>
                   <span className={css.fieldName}>Phone:</span>
@@ -225,55 +237,56 @@ const UserFormData = () => {
                     className={css.field}
                     type="text"
                     placeholder="Enter phone"
-                    name="phone"
-                    value={formikProps.values.phone || Phone}
-                    disabled={activeField !== 'phone'}
-                    autoFocus={activeField === 'phone'}
+                    name="Phone"
+                    value={formikProps.values.Phone ?? Phone}
+                    disabled={activeField !== 'Phone'}
+                    autoFocus={activeField === 'Phone'}
                   />
-                  {!activeField || activeField !== 'phone' ? (
+                  {!activeField || activeField !== 'Phone' ? (
                     <button
+                      type="button"
                       className={css.editBtn}
-                      onClick={() => toggleEditable('phone')}
+                      onClick={() => toggleEditable('Phone')}
                     >
                       <EditIcon color={'#54ADFF'} />
                     </button>
                   ) : (
                     <button className={css.editBtn} type="submit">
                       <ConfirmIcon
-                        // color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
-                        color={'#54ADFF'}
+                        color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
                       />
                     </button>
                   )}
-                  <ErrorMessage name="phone" component="div" />
+                  <ErrorMessage name="Phone" component="div" />
                 </label>
                 <label className={css.fieldWrapper}>
                   <span className={css.fieldName}>City:</span>
+
                   <Field
                     className={css.field}
                     type="text"
                     placeholder="Enter city"
-                    name="city"
-                    value={formikProps.values.city || City}
-                    disabled={activeField !== 'city'}
-                    autoFocus={activeField === 'city'}
+                    name="City"
+                    value={formikProps.values.City ?? City}
+                    disabled={activeField !== 'City'}
+                    autoFocus={activeField === 'City'}
                   />
-                  {!activeField || activeField !== 'city' ? (
+                  {!activeField || activeField !== 'City' ? (
                     <button
+                      type="button"
                       className={css.editBtn}
-                      onClick={() => toggleEditable('city')}
+                      onClick={() => toggleEditable('City')}
                     >
                       <EditIcon color={'#54ADFF'} />
                     </button>
                   ) : (
                     <button className={css.editBtn} type="submit">
                       <ConfirmIcon
-                        // color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
-                        color={'#54ADFF'}
+                        color={isSubmittingData ? '#00C3AD' : '#54ADFF'}
                       />
                     </button>
                   )}
-                  <ErrorMessage name="city" component="div" />
+                  <ErrorMessage name="City" component="div" />
                 </label>
               </div>
             </Form>

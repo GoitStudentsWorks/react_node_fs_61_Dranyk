@@ -47,13 +47,9 @@ const PetsItem = () => {
         <button onClick={() => handleDelete(_id)}>
           <TrashIcon color={'#54ADFF'} className={css.deleteIcon} />
         </button>
-        <img
-          src={petAvatar}
-          alt={namePet}
-          width="240"
-          height="240"
-          className={css.petImg}
-        />
+        <div className={css.petImg}>
+          <img src={petAvatar} alt={namePet} width="240" height="240" />
+        </div>
         <div>
           <p className={css.text}>
             <span className={css.attributeName}>Name: </span>

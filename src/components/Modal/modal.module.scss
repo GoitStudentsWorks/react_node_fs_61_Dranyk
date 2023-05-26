@@ -5,6 +5,7 @@
   width: 100%;
   height: 100%;
   transition: opacity 250ms, visibility 250ms;
+ 
 }
 
 
@@ -33,25 +34,20 @@
    background: #ffffff;
    backdrop-filter: blur(10px);
    z-index: 2000;
-   overflow: hidden;
-   text-decoration: none;
+    text-decoration: none;
    list-style: none;
      @media screen and (max-width: 767px) {
     width: 280px;
     height: 786px;
+    display: block;
+    overflow-y: auto;
+    height: 95%;
   }
  }
  
  .modal__section {
    border-radius: 20px;
    background-color: #ffffff;
-   text-decoration: none;
-   list-style: none;
- 
-     @media screen and (max-width: 768px) {
-     height: 95%;
-     overflow-y: scroll;
-   }
  }
 
  .modal__close {

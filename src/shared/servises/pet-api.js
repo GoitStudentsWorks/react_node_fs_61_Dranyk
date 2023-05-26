@@ -31,3 +31,9 @@ const { data } =
         });
   return data;
 };
+
+export const fetchDataUser = async (id) => {
+    const { data } =
+        await axios.get(`https://your-pet.onrender.com/api/auth/users/${id}`)
+      return data;
+    };

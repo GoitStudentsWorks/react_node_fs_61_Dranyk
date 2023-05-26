@@ -1,5 +1,5 @@
 import scss from './modal.module.scss';
-
+import React from 'react';
 import { createPortal } from 'react-dom';
 import { useEffect } from 'react';
 import { CloseIcon } from 'images/icons/userPageIcons';
@@ -15,7 +15,7 @@ const Modal = ({ closeModal, children }) => {
     };
     window.addEventListener('keydown', handleDownInEscape);
     return () => {
-      window.removeEventListener('keydown', handleDownInEscape);
+      return window.removeEventListener('keydown', handleDownInEscape);
     };
   }, [closeModal]);
 

@@ -38,9 +38,7 @@ const NoticeCategoryItem = ({
   price,
 }) => {
   const isLoggedIn = useSelector(isUserLogin);
-
   const userId = useSelector(getUserId);
-  console.log(userId);
   const data = {
     _id: _id,
     noticeAvatar: noticeAvatar,
@@ -59,8 +57,6 @@ const NoticeCategoryItem = ({
   // const user = useSelector(getUser);
   // const copy = Object.assign({}, userId);
   // const { user: { favorite: fav, _id: idd}} = copy;
-  // console.log(fav);
-  // console.log(idd);
   const [currentNotice, setCurrentNotice] = useState({});
   const dispatch = useDispatch();
   const { isModalOpen, openModal, closeModal } = useToggleModalWindow();
@@ -91,13 +87,11 @@ const NoticeCategoryItem = ({
   };
 
   const handleFavoriteToggle = async () => {
-    console.log(userId);
     // const copy = Object.assign({}, userId);
     const {
       user: { favorite: fav },
     } = userId;
-    console.log(fav);
-    // console.log(idd);
+  
     // if (!isLoggedIn) return toasty.toastInfo('You must be logged in');
     if (fav.includes(_id)) {
       try {
@@ -228,9 +222,7 @@ const NoticeCategoryItem = ({
         <Button
           className={css.learnBtn}
           onClick={() => {
-            console.log(data);
             setCurrentNotice(data);
-            console.log(currentNotice);
             openModal();
           }}
         >

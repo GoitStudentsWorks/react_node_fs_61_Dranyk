@@ -83,9 +83,7 @@ const NoticeCategoryItem = ({
   };
 
   const handleFavoriteToggle = async () => {
-      const {
-      user: { favorite: fav },
-    } = userId;
+      const { favorite: fav } = userId;
   
   
     if (fav.includes(_id)) {
@@ -100,6 +98,8 @@ const NoticeCategoryItem = ({
     } else {
       try {
         dispatch(fetchAddToFavorite(_id));
+        console.log(_id);
+
         toasty.toastSuccess('add to favorite');
 
         return;
@@ -124,6 +124,7 @@ const NoticeCategoryItem = ({
   };
   const handleDelete = _id => {
     dispatch(fetchDeleteNotice(_id));
+    console.log(_id);
     toasty.toastSuccess('Deleted successful');
   };
 

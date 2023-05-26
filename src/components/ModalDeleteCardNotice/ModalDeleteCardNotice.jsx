@@ -8,13 +8,14 @@ import css from './modalDeleteCardNotice.module.css';
 
 const ModalDeleteCardNotice = ({ closeModal, _id, title, handleDelete }) => {
   const dispatch = useDispatch();
-
+  // console.log(_id);
   const handleModalClose = () => {
     closeModal();
   };
 
   const handleModalCloseDelete = () => {
     dispatch(fetchDeleteNotice(_id));
+    console.log(_id);
     closeModal();
   };
 

@@ -16,13 +16,13 @@ const Nav = () => {
   return (
     <div className={css.div}>
       <div className={css.menu}>
-        <NavLink className={css.item} to="/news">
+        <NavLink className={`${css.item} active`} to="/news">
           News
         </NavLink>
-        <NavLink className={css.item} to="/notices/sell">
+        <NavLink className={`${css.item} active`} to="/notices/sell">
           Find pet
         </NavLink>
-        <NavLink className={css.item} to="/friends">
+        <NavLink className={`${css.item} active`} to="/friends">
           Our friends
         </NavLink>
       </div>

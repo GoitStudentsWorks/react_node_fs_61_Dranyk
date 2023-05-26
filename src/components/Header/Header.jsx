@@ -49,7 +49,6 @@ const Header = () => {
               <NavLink to="/">
                 <img className={css.logo} src={logo} alt="YOUR PET" />
               </NavLink>
-              ;
               {isLoggedIn ? (
                 <div className={css.authNavigate}>
                   <NavLink
@@ -58,7 +57,7 @@ const Header = () => {
                     onClick={toggle}
                     style={{ width: 164 }}
                   >
-                    <img className={css.icon} src={userIcon} alt="userIcon" />
+                    <img className={css.icon} src={userIcon} alt="userIcon" /><p>Name</p>
                   </NavLink>
                 </div>
               ) : (

@@ -9,7 +9,7 @@ const UserNav = () => {
     <div className={css.div}>
       <NavLink className={css.user} to="/user">
         <img className={css.icon} src={userIcon} alt="userIcon" />
-        {user? 
+        {user.name ?   
         (<p className={css.name}>{user.name}</p>)
         : 
         (<p className={css.name}>User</p>)

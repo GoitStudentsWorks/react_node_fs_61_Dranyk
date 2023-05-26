@@ -11,9 +11,10 @@ import { useState } from 'react';
 import Button from '../ButtonNotices/ButtonNotices';
 import { isUserLogin } from '../../redux/auth/auth-selectors';
 import useToggleModalWindow from '../../hooks/useToggleModalWindow';
-import useToggleModalApproveAction from '../../hooks/useToggleModalModalApproveAction';
+import useToggleModalDeleteCardNotice from '../../hooks/useToggleModalDeleteCardNotice';
 import Modal from '../Modal/Modal';
-import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
+// import ModalApproveAction from '../ModalApproveAction/ModalApproveAction';
+import ModalDeleteCardNotice from '../ModalDeleteCardNotice/ModalDeleteCardNotice'
 import { getUserId } from '../../redux/auth/auth-selectors';
 import {
   fetchAddToFavorite,
@@ -54,18 +55,13 @@ const NoticeCategoryItem = ({
     price: price,
   };
 
-  // const user = useSelector(getUser);
-  // const copy = Object.assign({}, userId);
-  // const { user: { favorite: fav, _id: idd}} = copy;
   const [currentNotice, setCurrentNotice] = useState({});
   const dispatch = useDispatch();
   const { isModalOpen, openModal, closeModal } = useToggleModalWindow();
   const { isModalOpenApprove, openModalApprove, closeModalApprove } =
-    useToggleModalApproveAction();
+    useToggleModalDeleteCardNotice();
 
-  // const date = new Date();
-  // const thisYear = Number(date.getFullYear());
-  // const age = Number(dateOfBirth.slice(6, 10) - thisYear);
+
   function getAge(dateOfBirth) {
     const ymdArr = dateOfBirth.split('.').map(Number).reverse();
     ymdArr[1]--;
@@ -87,12 +83,9 @@ const NoticeCategoryItem = ({
   };
 
   const handleFavoriteToggle = async () => {
-    // const copy = Object.assign({}, userId);
-    const {
-      user: { favorite: fav },
-    } = userId;
+      const { favorite: fav } = userId;
   
-    // if (!isLoggedIn) return toasty.toastInfo('You must be logged in');
+  
     if (fav.includes(_id)) {
       try {
         dispatch(fetchRemoveFromFavorite(_id));
@@ -105,6 +98,8 @@ const NoticeCategoryItem = ({
     } else {
       try {
         dispatch(fetchAddToFavorite(_id));
+        console.log(_id);
+
         toasty.toastSuccess('add to favorite');
 
         return;
@@ -129,6 +124,7 @@ const NoticeCategoryItem = ({
   };
   const handleDelete = _id => {
     dispatch(fetchDeleteNotice(_id));
+    console.log(_id);
     toasty.toastSuccess('Deleted successful');
   };
 
@@ -176,20 +172,20 @@ const NoticeCategoryItem = ({
                 )}
               />
               {checkOwner(ownerNotice) && (
-                <Button
-                  onClick={openModalApprove}
-                  className={css.topBtn}
-                  SVGComponent={() => <TrashIcon color="#54ADFF" />}
-                />
-              )}
-              {isModalOpenApprove && (
-                <ModalApproveAction
-                  closeModal={closeModalApprove}
-                  handleDelete={handleDelete}
-                  _id={_id}
-                  title={title}
-                />
-              )}
+              <Button
+                onClick={openModalApprove}
+                className={css.topBtn}
+                SVGComponent={() => <TrashIcon color="#54ADFF" />}
+              />
+            )}
+            {isModalOpenApprove && (
+              <ModalDeleteCardNotice
+                closeModal={closeModalApprove}
+                handleDelete={handleDelete}
+                _id={_id}
+                title={title}
+              />
+            )}
             </div>
           )}
         </div>

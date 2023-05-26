@@ -59,9 +59,7 @@
   cursor: pointer;
   z-index: 11;
   padding: 0;
-  @media screen and (max-width: 767px) {
-    margin-left: 90px;
-  }
+
 }
 
 .burger {
@@ -99,7 +97,7 @@
 
 .authNavigate {
   display: flex;
-  margin-top: 104px;
+  margin-top: 80px;
   justify-content: center;
   align-items: center;
   @media screen and (min-width: 768px) {
@@ -111,6 +109,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 84px;
+  color: #ffc107;
 }
 
 .login {
@@ -157,7 +157,9 @@
 
 .icon {
   margin-left: 8px;
+  margin-right: 8px;
 }
+
 
 .link {
   font-family: 'Manrope';

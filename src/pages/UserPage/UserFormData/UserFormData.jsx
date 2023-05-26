@@ -23,8 +23,6 @@ const UserFormData = () => {
   const [activeField, setActiveField] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log('isLoading', isLoading);
-
   const toggleEditable = field => {
     if (activeField === field) {
       setActiveField(null);

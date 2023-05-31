@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         {/* <AuthLayout> */}
-        <BrowserRouter basename="/YourPet">
+        <BrowserRouter basename="/react_node_fs_61_Dranyk">
           <App />
         </BrowserRouter>
         {/* </AuthLayout> */}

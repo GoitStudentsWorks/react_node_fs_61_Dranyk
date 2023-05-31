@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react_node_fs_61_Dranyk/static/css/main.6536efb3.css",
-    "main.js": "/react_node_fs_61_Dranyk/static/js/main.50309fb7.js",
+    "main.js": "/react_node_fs_61_Dranyk/static/js/main.c86180ad.js",
     "static/css/714.61cd3791.chunk.css": "/react_node_fs_61_Dranyk/static/css/714.61cd3791.chunk.css",
     "static/js/714.438c8679.chunk.js": "/react_node_fs_61_Dranyk/static/js/714.438c8679.chunk.js",
     "static/css/786.96166708.chunk.css": "/react_node_fs_61_Dranyk/static/css/786.96166708.chunk.css",
@@ -54,7 +54,7 @@
     "static/media/menu-hamburger.svg": "/react_node_fs_61_Dranyk/static/media/menu-hamburger.e5ce08a82de7546bfde31ea978aefa46.svg",
     "static/media/plus-small.svg": "/react_node_fs_61_Dranyk/static/media/plus-small.79b1520b80df332dbb32d481b679a6e1.svg",
     "main.6536efb3.css.map": "/react_node_fs_61_Dranyk/static/css/main.6536efb3.css.map",
-    "main.50309fb7.js.map": "/react_node_fs_61_Dranyk/static/js/main.50309fb7.js.map",
+    "main.c86180ad.js.map": "/react_node_fs_61_Dranyk/static/js/main.c86180ad.js.map",
     "714.61cd3791.chunk.css.map": "/react_node_fs_61_Dranyk/static/css/714.61cd3791.chunk.css.map",
     "714.438c8679.chunk.js.map": "/react_node_fs_61_Dranyk/static/js/714.438c8679.chunk.js.map",
     "786.96166708.chunk.css.map": "/react_node_fs_61_Dranyk/static/css/786.96166708.chunk.css.map",
@@ -82,6 +82,6 @@
   },
   "entrypoints": [
     "static/css/main.6536efb3.css",
-    "static/js/main.50309fb7.js"
+    "static/js/main.c86180ad.js"
   ]
 }
